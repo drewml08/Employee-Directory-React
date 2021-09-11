@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import API from "../utils/API";
 import Card from "../components/Card";
 import Alert from "../components/Alert";
-import { useTable } from 'react-table';
+import EmployeeTable from "../components/EmployeeTable";
 
 class Employees extends Component {
   state = {
@@ -11,15 +11,15 @@ class Employees extends Component {
 
   componentDidMount() {
     API.getRandomTeam()
-      .then(res => this.setState({ employees: res.data.message.results}))
+      .then(res => this.setState({ employees: res.data.results}))
       .catch(err => console.log(err));
   }
 
   render() {
     
     return (
-      <div>
-      </div>
+      <EmployeeTable data = {this.state.employees}>
+      </EmployeeTable>
     );
   }
 }

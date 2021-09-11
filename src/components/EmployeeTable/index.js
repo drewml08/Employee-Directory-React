@@ -1,6 +1,6 @@
 import React from "react";
 import "./style.css";
-import { useTable } from 'react-table';
+import { useTable, useSortBy } from 'react-table';
 
 
 function EmployeeTable(props) {
@@ -25,12 +25,10 @@ function EmployeeTable(props) {
     ],
     []
   )
-  const data = React.useMemo( 
-    () => props.data,
-    []
-    )
 
-  const tableInstance = useTable({ columns, data })
+ const data = props.data;
+
+  const tableInstance = useTable({ columns, data }, useSortBy)
 
   const {
     getTableProps,
@@ -50,9 +48,12 @@ function EmployeeTable(props) {
             {
             headerGroup.headers.map(column => (
               
-              <th {...column.getHeaderProps()}>
+              <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                 {
                 column.render('Header')}
+                <span>
+                {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
+                </span>
               </th>
             ))}
           </tr>

@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import API from "../utils/API";
-import Card from "../components/Card";
-import Alert from "../components/Alert";
 import EmployeeTable from "../components/EmployeeTable";
 
 class Employees extends Component {
@@ -18,8 +16,10 @@ class Employees extends Component {
   render() {
     
     return (
+      
       <EmployeeTable data = {this.state.employees}>
       </EmployeeTable>
+      
     );
   }
 }

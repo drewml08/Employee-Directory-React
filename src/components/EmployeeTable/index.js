@@ -1,6 +1,6 @@
 import React from "react";
 import "./style.css";
-import { useTable, useSortBy } from 'react-table';
+import { useTable, useSortBy, useFilters} from 'react-table';
 
 
 function EmployeeTable(props) {
@@ -28,7 +28,9 @@ function EmployeeTable(props) {
 
  const data = props.data;
 
-  const tableInstance = useTable({ columns, data }, useSortBy)
+ const [filterInput, setFilterInput] = React.useState("");
+
+  const tableInstance = useTable({ columns, data }, useFilters, useSortBy);
 
   const {
     getTableProps,
@@ -36,9 +38,22 @@ function EmployeeTable(props) {
     headerGroups,
     rows,
     prepareRow,
+    setFilter,
   } = tableInstance
 
+  const handleFilterChange = e => {
+    const value = e.target.value || undefined;
+    setFilter("name.last", value);
+    setFilterInput(value);
+  };
+
   return (
+  <div>
+    <input
+    value={filterInput}
+    onChange={handleFilterChange}
+    placeholder={"Search last name"}
+    />
     <table {...getTableProps()}>
       <thead>
         {
@@ -83,6 +98,7 @@ function EmployeeTable(props) {
         })}
       </tbody>
     </table>
+  </div>    
   )
 }
 
